@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+     <head>
+          <meta charset="UTF-8">
+          <meta content="width=device-width, initial-scale=1.0" name="viewport">
+          <title>Your Stocks</title>
+          <!-- Use the same styling from my React app  -->
+          <link href='styles/main.css' rel='stylesheet'>
+
+          <!-- Include Chart.js and Moment.js adapter -->
+          <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+          <script src='https://cdn.jsdelivr.net/npm/moment@2.29.1'></script>
+          <script src='https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0'></script>
+     </head>
+     <body>
+          <header>
+               <div>
+                    <h1>Stock Cards</h1>
+                    <!-- Home button to return to stocks grid from stock details view -->
+                    <button id='button-home'>
+                         <svg height='30' viewBox='0 0 24 24' width='30' xmlns='http://www.w3.org/2000/svg'>
+                              <path d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z'/>
+                         </svg>
+                    </button>
+               </div>
+          </header>
+          <main>
+               <ul id='stocks-grid'>
+                    <li class='empty-slot' data-slot-id='0'></li>
+                    <li class='empty-slot' data-slot-id='1'></li>
+                    <li data-slot-id='2'>
+                         <button class='button-close'></button>
+                         <section>
+                              <p class='stock-symbol'>SYMBOL</p>
+                              <p class='stock-name'>Name</p>
+                              <span class='current-price'>0.00</span>
+                              <span class='price-change'>0.00</span>
+                         </section>
+                         <button data-button-text='replace'></button>
+                    </li>
+                    <li class='empty-slot' data-slot-id='3'></li>
+                    <li class='empty-slot' data-slot-id='4'></li>
+                    <li class='empty-slot' data-slot-id='5'></li>
+                    <li class='empty-slot' data-slot-id='6'></li>
+                    <li class='empty-slot' data-slot-id='7'></li>
+                    <li class='empty-slot' data-slot-id='8'></li>
+                    <li class='empty-slot' data-slot-id='9'></li>
+               </ul>
+               <dialog id='add-stock-dialog'>
+                    <section>
+                         <button class='button-close'></button>
+                         <p>Add or Replace Stock </p><br>
+                         <input id='stock-input' placeholder='Enter stock ticker' type='text'/>
+                         <div id='button-group'>
+                              <button data-button-text='ok'></button>
+                              <button data-button-text='cancel'></button>
+                         </div>
+                    </section>
+               </dialog>
+               <section id='stock-details'>
+                    <span class='stock-symbol'>Symbol</span>
+                    <span class='stock-name'>Name</span>
+                    <div>
+                         <span class='current-price'>0.00</span>
+                         <span class='price-change'>0.00</span>
+                    </div>
+                    <ul id='time-options'>
+                         <li data-period='1D'></li>
+                         <li data-period='5D'></li>
+                         <li data-period='1M'></li>
+                         <li data-period='3M'></li>
+                         <li data-period='YTD'></li>
+                         <li data-period='1Y'></li>
+                         <li data-period='5Y'></li>
+                         <li data-period='ALL'></li>
+                    </ul>
+                    <figure id='chart-container'>
+                         <canvas height='300' width='100%'></canvas>
+                    </figure>
+                    <ul>
+                         <li data-stat='Previous Close'>0.00</li>
+                         <li data-stat='Open'>0.00</li>
+                         <li data-stat="Day's Range">
+                              <span class='low'>0.00</span><span class='high'>0.00</span>
+                         </li>
+                         <li data-stat='52 Week Range'>
+                              <span class='low'>0.00</span><span class='high'>0.00</span>
+                         </li>
+                         <li data-stat='Volume'>0</li>
+                         <li data-stat='Avg Volume'>0</li>
+                         <li data-stat='Market Cap (intraday)'>0</li>
+                         <li data-stat='Beta (5Y Monthly)'>0</li>
+                         <li data-stat='PE Ratio (TTM)'>0</li>
+                         <li data-stat='EPS (TTM)'>0</li>
+                         <li data-stat='1y Target Est'>0</li>
+                         <li data-stat='Dividend Amount'>0</li>
+                    </ul>
+               </section>
+          </main>
+          <footer>
+               <p>©<span id='current-year'>2024</span> Group 2, CS480 Fall2024. All rights reserved.</p>
+          </footer>
+          <script src='styles/index.js'></script>
+     </body>
+</html>
