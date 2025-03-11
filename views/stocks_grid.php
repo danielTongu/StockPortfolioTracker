@@ -1,3 +1,4 @@
+<?php /* views/stock_grid.php */?>
 <!DOCTYPE html>
 <html lang='en'>
     <?php include 'head.php'; ?>

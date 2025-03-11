@@ -1,3 +1,4 @@
+<?php /* views/add_stock.php */?>
 <!DOCTYPE html>
 <html lang='en'>
     <?php include 'head.php'; ?>

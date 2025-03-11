@@ -9,9 +9,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <?php include 'head.php'; ?>
-    </head>
+    <?php include 'header.php'; ?>
     <body>
         <?php include 'header.php'; ?>
         <main>
@@ -99,5 +97,10 @@
         </main>
         <?php include 'footer.php'; ?>
         <script src="./scripts/stock_details.js"></script>
+        
+        <!-- Include Chart.js and Moment.js adapter -->
+        <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
+        <script src='https://cdn.jsdelivr.net/npm/moment@2.29.1'></script>
+        <script src='https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0'></script>
     </body>
 </html>
