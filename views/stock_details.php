@@ -1,12 +1,4 @@
-<?php
-// views/stock_details.php
-/**
- * View: Stock Details.
- *
- * Displays detailed stock information along with a chart.
- * Time frame options are now provided by the controller.
- */
-?>
+<?php// views/stock_details.php ?>
 <!DOCTYPE html>
 <html lang="en">
     <?php include 'head.php'; ?>
@@ -25,6 +17,7 @@
                         <?php echo number_format($stockData['changePercent'], 2); ?>
                     </span>
                 </div>
+                
                 <!-- Time frame options using data from the controller -->
                 <ul id="time-options">
                     <?php foreach ($timeFrames as $period): ?>
@@ -34,12 +27,14 @@
                         </li>
                     <?php endforeach; ?>
                 </ul>
+                
                 <!-- Chart container -->
                 <figure id="chart-container">
                     <canvas id="stockChart" height="300"
                         data-chart='<?php echo htmlspecialchars($chartData, ENT_QUOTES, 'UTF-8'); ?>'>
                     </canvas>
                 </figure>
+                
                 <!-- Detailed statistics -->
                 <ul id="stock-stats">
                     <li data-stat='previousClose'>

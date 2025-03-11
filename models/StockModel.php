@@ -322,6 +322,7 @@ class StockModel {
                 'avgVolume'       => null,
             ];
         }
+        
         $latestData = $timeSeries[$dates[count($dates)-1]];
         $previousData = $timeSeries[$dates[count($dates)-2]];
         $previousClose = isset($previousData['4. close']) ? floatval($previousData['4. close']) : null;
