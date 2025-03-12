@@ -12,9 +12,8 @@
 <body>
     <?php include 'header.php'; ?>
     <main>
-        <h1>Error</h1>
-        <p><?php echo htmlspecialchars($error); ?></p>
-        <a href="index.php">Back to Stocks</a>
+        <p><?php echo htmlspecialchars($error); ?></p><br>
+        <a href="index.php">Exit</a>
     </main>
     <?php include 'footer.php'; ?>
 </body>
