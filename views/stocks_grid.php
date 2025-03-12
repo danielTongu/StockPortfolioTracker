@@ -1,4 +1,4 @@
-<?php /* views/stock_grid.php */?>
+<?php // views/stocks_grid.php ?>
 <!DOCTYPE html>
 <html lang='en'>
     <?php include 'head.php'; ?>
@@ -6,8 +6,7 @@
         <?php include 'header.php'; ?>
         <main>
             <ul id='stocks-grid'>
-                <?php
-                // Loop through each stock slot.
+                <?php //------ Loop through each stock slot. ------
                 for ($slotId = 0; $slotId < NUM_STOCKS; $slotId++) {
                     
                     // Retrieve the stock for the current slot.
@@ -40,7 +39,7 @@
                     </li>
                     <?php
                 }
-                // end of loop
+                // ------ nd of loop ------ 
                 ?>
             </ul>
         </main>

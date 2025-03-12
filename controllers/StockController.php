@@ -10,17 +10,17 @@ require_once 'models/StockModel.php';
  * adding/replacing a stock, and removing a stock.
  */
 class StockController {
-
+    
     /**
      * @var StockController|null The single instance of the class (singleton instance).
      */
     private static $instance = null;
-
+    
     /**
      * @var StockModel Instance of StockModel to fetch stock data.
      */
     private $model;
-
+    
     /**
      * Private constructor to prevent direct instantiation.
      * Initializes the session, model, and session-based stock storage.
@@ -30,15 +30,15 @@ class StockController {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-
+        
         // Instantiate the StockModel.
         $this->model = new StockModel();
-
+        
         // Define the number of stock slots if not already defined.
         if (!defined('NUM_STOCKS')) {
             define('NUM_STOCKS', 10);
         }
-
+        
         // Initialize the stocks in the session:
         // If the 'stocks' array doesn't exist or isn't an array, create it with NUM_STOCKS null slots.
         if (!isset($_SESSION['stocks']) || !is_array($_SESSION['stocks'])) {
@@ -69,7 +69,6 @@ class StockController {
 
     /**
      * Display the stocks grid.
-     *
      * Retrieves the current stocks from the session and includes the view file that displays the grid.
      */
     public function index() {
@@ -82,7 +81,7 @@ class StockController {
         // Include the view that renders the stocks grid.
         include 'views/stocks_grid.php';
     }
-
+    
     /**
      * Display details for a single stock.
      * Validates the provided stock symbol, fetches the corresponding stock data using the model,
@@ -120,38 +119,39 @@ class StockController {
 
                 // Prepare additional statistics for the current date.
                 $additionalStats[] = [
-                    'date' => $date,
-                    'open' => floatval($dataPoint['1. open']),
-                    'high' => floatval($dataPoint['2. high']),
-                    'low' => floatval($dataPoint['3. low']),
-                    'close' => floatval($dataPoint['4. close']),
-                    'adjustedClose' => isset($dataPoint['5. adjusted close']) ? floatval($dataPoint['5. adjusted close']) : null,
-                    'dividendAmount' => isset($dataPoint['7. dividend amount']) ? floatval($dataPoint['7. dividend amount']) : null,
-                    'splitCoefficient' => isset($dataPoint['8. split coefficient']) ? floatval($dataPoint['8. split coefficient']) : null,
-                    'volume' => intval($dataPoint['6. volume']),
+                    'date'            => $date,
+                    'open'            => floatval($dataPoint['1. open']),
+                    'high'            => floatval($dataPoint['2. high']),
+                    'low'             => floatval($dataPoint['3. low']),
+                    'close'           => floatval($dataPoint['4. close']),
+                    'adjustedClose'   => isset($dataPoint['5. adjusted close']) ? floatval($dataPoint['5. adjusted close']) : null,
+                    'dividendAmount'  => isset($dataPoint['7. dividend amount']) ? floatval($dataPoint['7. dividend amount']) : null,
+                    'splitCoefficient'=> isset($dataPoint['8. split coefficient']) ? floatval($dataPoint['8. split coefficient']) : null,
+                    'volume'          => intval($dataPoint['6. volume']),
                 ];
             }
 
             // Convert the chart data to JSON format for consumption by JavaScript.
             $chartData = json_encode([
-                'dates' => $dates,
-                'prices' => $formattedPrices,
+                'dates'           => $dates,
+                'prices'          => $formattedPrices,
                 'additionalStats' => $additionalStats,
-                'timeUnit' => $stockData['timeUnit'],
-                'symbol' => $stockData['symbol'],
-                'changePercent' => $stockData['changePercent'],
-                'timeFrame' => $timeFrame
+                'timeUnit'        => $stockData['timeUnit'],
+                'symbol'          => $stockData['symbol'],
+                'changePercent'   => $stockData['changePercent'],
+                'timeFrame'       => $timeFrame
             ]);
 
-            // Define available time frame options for user selection.
-            $timeFrames = ['1D', '5D', '1M', '6M', 'YTD', '1Y', '5Y', 'ALL'];
+            // Reference available time frames from the model for consistency.
+            $timeFrames = StockModel::$availableTimeFrames;
 
             // Set the page title dynamically including the stock symbol.
-            $pageTitle = "Stock Details - $symbol";
+            $pageTitle = "Stock Details";
 
             // Include the view file that renders the stock details and chart.
             include 'views/stock_details.php';
         } catch (Exception $e) {
+            $pageTitle = "Error while viewing {$symbol} details - {$timeFrame}";
             // In case of any error, capture the exception message.
             $error = $e->getMessage();
             
@@ -159,7 +159,7 @@ class StockController {
             include 'views/error.php';
         }
     }
-
+    
     /**
      * Show the form to add or replace a stock.
      * Sets the page title and includes the view that contains the add/replace stock form.
@@ -173,7 +173,7 @@ class StockController {
         // Include the view file with the add stock form.
         include 'views/add_stock.php';
     }
-
+    
     /**
      * Handle the addition or replacement of a stock.
      * Processes the POST data to extract and validate the stock symbol, checks for duplicates,
@@ -185,6 +185,8 @@ class StockController {
      * @param string $timeFrame The selected time frame (default is '1D').
      */
     public function add($data, $slot, $timeFrame = '1D') {
+        $pageTitle = 'Error while adding stock';
+        
         // Retrieve and sanitize the stock symbol from POST data.
         $symbol = isset($data['symbol']) ? strtoupper(trim($data['symbol'])) : '';
         
@@ -197,9 +199,8 @@ class StockController {
 
         // Check the session to ensure no duplicate stock symbols exist in a different slot.
         foreach ($_SESSION['stocks'] as $index => $stock) {
-            // If a duplicate is found, set an error and display it.
             if ($stock && $stock['symbol'] === $symbol && $index !== $slot) {
-                $error = 'Duplicate stock symbol in another slot.';
+                $error = "Duplicate stock symbol [{$symbol}] in another slot.";
                 include 'views/error.php';
                 return;
             }
@@ -223,7 +224,7 @@ class StockController {
             include 'views/error.php';
         }
     }
-
+    
     /**
      * Remove a stock from a specified slot.
      * Sets the corresponding session slot to null and redirects to the index page.
@@ -231,11 +232,9 @@ class StockController {
      * @param int|null $slot The slot index from which the stock will be removed.
      */
     public function remove($slot) {
-        // If the slot is valid and exists, set it to null.
         if ($slot !== null && isset($_SESSION['stocks'][$slot])) {
             $_SESSION['stocks'][$slot] = null;
         }
-        // Redirect to the index page after removal.
         header('Location: index.php');
         exit();
     }
