@@ -3,19 +3,13 @@
      <head>
           <meta charset="UTF-8">
           <meta content="width=device-width, initial-scale=1.0" name="viewport">
-          <title>Your Stocks</title>                        
+          <title>Stock Ticker Prototype</title>                        
           <link href='styles/main.css' rel='stylesheet'>
-
-          <!-- Include Chart.js and Moment.js adapter -->
-          <script src='https://cdn.jsdelivr.net/npm/chart.js'></script>
-          <script src='https://cdn.jsdelivr.net/npm/moment@2.29.1'></script>
-          <script src='https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0'></script>
      </head>
      <body>
           <header>
                <div>
-                    <h1>Stock Cards</h1>
-                    <!-- Home button to return to stocks grid from stock details view -->
+                    <h1>Header</h1>
                     <button id='button-home'>
                          <svg height='30' viewBox='0 0 24 24' width='30' xmlns='http://www.w3.org/2000/svg'>
                               <path d='M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z'/>
@@ -40,9 +34,27 @@
                     <li class='empty-slot' data-slot-id='3'></li>
                     <li class='empty-slot' data-slot-id='4'></li>
                     <li class='empty-slot' data-slot-id='5'></li>
-                    <li class='empty-slot' data-slot-id='6'></li>
+                    <li data-slot-id='6'>
+                        <button class='button-close'></button>
+                         <section>
+                              <p class='stock-symbol'>SYMBOL</p>
+                              <p class='stock-name'>Name</p>
+                              <span class='current-price'>0.00</span>
+                              <span class='price-change negative'>-0.01</span>
+                         </section>
+                         <button data-button-text='replace'></button>
+                    </li>
                     <li class='empty-slot' data-slot-id='7'></li>
-                    <li class='empty-slot' data-slot-id='8'></li>
+                    <li data-slot-id='8'>
+                        <button class='button-close'></button>
+                         <section>
+                              <p class='stock-symbol'>SYMBOL</p>
+                              <p class='stock-name'>Name</p>
+                              <span class='current-price'>0.00</span>
+                              <span class='price-change positive'>0.01</span>
+                         </section>
+                         <button data-button-text='replace'></button>
+                    </li>
                     <li class='empty-slot' data-slot-id='9'></li>
                </ul>
                <dialog id='add-stock-dialog'>
@@ -99,6 +111,6 @@
           <footer>
                <p>©<span id='current-year'>2024</span> Group 2, CS480 Fall2024. All rights reserved.</p>
           </footer>
-          <script src='styles/index.js'></script>
+          <script src='scripts/prototype.js'></script>
      </body>
 </html>
